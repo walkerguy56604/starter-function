@@ -1,0 +1,19 @@
+name: Test GitHub App Auth
+
+on:
+  workflow_dispatch:   # Allows manual triggering
+
+jobs:
+  test-auth:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Print APP_ID
+        run: echo "APP_ID is ${{ secrets.APP_ID }}"
+
+      - name: Print private key length
+        run: echo "APP_PRIVATE_KEY length is $(echo '${{ secrets.APP_PRIVATE_KEY }}' | wc -c)"
+
+      # You can add further steps here to test real auth with your GitHub App if you want
