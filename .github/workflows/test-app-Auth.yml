@@ -1,19 +1,17 @@
-name: Test GitHub App Auth
+name: Supabase Deploy
 
 on:
-  workflow_dispatch:   # Allows manual triggering
+  push:
+    branches:
+      - main  # Runs when you push to the main branch
 
 jobs:
-  test-auth:
+  deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out code
-        uses: actions/checkout@v3
-
-      - name: Print APP_ID
-        run: echo "APP_ID is ${{ secrets.APP_ID }}"
-
-      - name: Print private key length
-        run: echo "APP_PRIVATE_KEY length is $(echo '${{ secrets.APP_PRIVATE_KEY }}' | wc -c)"
-
-      # You can add further steps here to test real auth with your GitHub App if you want
+      - uses: actions/checkout@v3
+      - uses: supabase/setup-cli@v1
+      - run: supabase db push
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ5c2lna3Jyemhkc2d4Z3RpZmxrIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1MzU0Mzg0OCwiZXhwIjoyMDY5MTE5ODQ4fQ.o7iLbkc3e1DvzsCnlFX09wjDOn-bs2P6dBixlnj65RA }}
+          SUPABASE_PROJECT_REF: bysigkrrzhdsgxgtiflk
