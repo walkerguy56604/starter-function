@@ -1,17 +1,26 @@
-name: Supabase Deploy
+name: Supabase Deployment
 
 on:
   push:
     branches:
-      - main  # Runs when you push to the main branch
+      - main  # or your branch name
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
+    env:
+      SUPABASE_URL: https://bysigkrrzhdsgxgtiflk.supabase.co
+      SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+
     steps:
-      - uses: actions/checkout@v3
-      - uses: supabase/setup-cli@v1
-      - run: supabase db push
-        env:
-          SUPABASE_ACCESS_TOKEN: ${{eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ5c2lna3Jyemhkc2d4Z3RpZmxrIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1MzU0Mzg0OCwiZXhwIjoyMDY5MTE5ODQ4fQ.o7iLbkc3e1DvzsCnlFX09wjDOn-bs2P6dBixlnj65RA }}
-          SUPABASE_PROJECT_REF: bysigkrrzhdsgxgtiflk
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Do something with Supabase
+        run: |
+          echo "Supabase URL: $SUPABASE_URL"
+          echo "Supabase Key length: ${#SUPABASE_ANON_KEY}"
+
+          # Example: call supabase CLI or make curl requests here
+          # curl -H "apikey: $SUPABASE_ANON_KEY" $SUPABASE_URL/rest/v1/your_table
