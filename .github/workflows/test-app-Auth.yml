@@ -1,10 +1,9 @@
 name: Supabase Test
 on:
   workflow_dispatch:
-on:
   push:
     branches:
-      - main  # or your default branch
+      - main  # or your default branch name
 
 jobs:
   test-supabase:
